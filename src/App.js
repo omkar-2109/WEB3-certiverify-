@@ -4,6 +4,7 @@ import Login from "./pages/login";
 import Dashboard from './pages/dashboard';
 //import Verify from './pages/verify';
 import Register from './pages/register';
+import Down from './pages/down';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <Route path='/' element={<Login/>}/>
     <Route path='dashboard' element={<Dashboard/>}/>
     <Route path='register' element={<Register/>}/>
+    <Route path='down' element={<Down/>}/>
   </Routes>
   </Router>
     

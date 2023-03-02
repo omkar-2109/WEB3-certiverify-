@@ -74,19 +74,6 @@ export default function Login() {
     };
   
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   //const navigate = useNavigate();
   
   //const handleClick = () => {

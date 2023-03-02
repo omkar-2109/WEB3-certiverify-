@@ -2,39 +2,19 @@ import {React} from 'react';
 import styled from "styled-components";
 import Logo from "./Sanjivani.png";
 import { ethers } from "ethers";
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import abi from './Certification.json'
+import Certification from './Certification.json'
 
 export default function Login() {
 
-  const contractAddress = '0x11B6b460412582C44ddb084365E36c624C90246A';
-  const contractABI = abi.abi;
-    //const ethers = require('ethers');
-  const provider = new ethers.providers.JsonRpcProvider('https://polygon-mumbai.infura.io/v3/35b5b5f38ace48d9a4db144f27c29ba0');
-  const signer = provider.getSigner();
   
-  const contract = new ethers.Contract(contractAddress,contractABI,signer);
- 
-  async function generateCertificate(id, candidateName, orgName, courseName, expirationYear) {
-      const tx = await contract.generateCertificate(id, candidateName, orgName, courseName, expirationYear);
-      const receipt = await tx.wait();
-      console.log(receipt);
-    }
 
-  async function getData(id) {
-      const data = await contract.getData(id);
-      console.log(data);
-    }
-  const handleGenerateCertificate = async () => {
-      await generateCertificate('iid', 'JohnDoe', 'ABCOrg', 'CourseName', 2024);
-    }
-
-  const handleGetData = async () => {
-      await getData('iid');
-    }
   let navigate = useNavigate();
   return(
-    <FormContainer> 
+    
+<>    
+<FormContainer> 
     <form action=''>
       <div className="brand">
       <img src={Logo} alt="Sanjivani.png"/>
@@ -45,13 +25,11 @@ export default function Login() {
       <button type="submit" onClick={() => {navigate('/register')}} >Certificate</button>
       <br/>
       <br/>
-      <button onClick={handleGenerateCertificate}  >put data</button>
-      <button onClick={handleGetData}>Get Data</button>
-
+      <button type="submit" onClick={() => {navigate('/down')}}>Marksheet</button>
       </center>
     </form>
     </FormContainer> 
-
+</>
   );
 
 }
