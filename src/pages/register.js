@@ -3,32 +3,71 @@ import styled from "styled-components";
 //import Logo from './logo.jpg';
 import Logo from "./Sanjivani.png";
 import { ethers } from "ethers";
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Certification from './Certification.json'
 import {connectWallet} from './login';
 
 export default function Dashboard() {
 
+  const [walletAddress, setWalletAddress] = useState("");
   const [certificateId, setCertificateId] = useState('');
   const [certificateData, setCertificateData] = useState({});
   const contractAddress = '0xAB53AaE6B007DBE08dA62C0C1F5935EA40816a8a';
-  const privateKeya = process.env.REACT_APP_PRIVATE_KEY;
-  const privateKey = 'ae2e5855bfe5cf2cf575e7a39127a0a10ef682fbbde14d50209c5dd0bd7be417';
-  const providerUrl = 'https://polygon-mumbai.infura.io/v3/35b5b5f38ace48d9a4db144f27c29ba0';
-
+  const privateKey = process.env.REACT_APP_PRIVATE_KEY;
+  const providerUrl = process.env.REACT_APP_PROVIDER_URL;
+  
   const provider = new ethers.providers.JsonRpcProvider(providerUrl);
-  const signer = provider.getSigner('0x58aA76C20fFcA2e38Cb7ed6fCfa5cdEeb20b7E63');
+  const signer = provider.getSigner();
   const wallet = new ethers.Wallet(privateKey, provider);
 
   const contract = new ethers.Contract(contractAddress, Certification.abi, wallet);
  
-console.log(privateKeya);
 
+  const [address, setAddress] = useState('');
+  const [balance, setBalance] = useState('');
 
+  useEffect(() => {
+    async function getAccountInfo() {
+      if (typeof window.ethereum !== 'undefined') {
+        try {
+          // Connect to MetaMask
+          await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+          // Create provider and signer objects
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          const signer = provider.getSigner();
+
+          // Get account address
+          const address = await signer.getAddress();
+          setAddress(address);
+
+          // Get account balance
+          const balanceWei = await signer.getBalance();
+          const balanceEth = ethers.utils.formatEther(balanceWei);
+          setBalance(balanceEth);
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        console.log('MetaMask not detected');
+      }
+    }
+
+    getAccountInfo();
+  }, []);
+  // async function accountData(){
+  //   const address = await signer.getAddress();
+  //   console.log('Account Address:', address);
+  //   const balanceWei = await signer.getBalance();
+  //   const balanceEth = ethers.utils.formatEther(balanceWei);
+  //   console.log('Account Balance:', balanceEth, 'Matic');
+  // }
+  // accountData();
   const generateCertificate = async () => {
     try {
-
+   
+    
   let CertificateId = document.querySelector("#CertificateId").value;
   let NameOfStudent = document.querySelector("#NameOfStudent").value;
   let NameOfOrg = document.querySelector("#NameOfOrg").value;
@@ -78,7 +117,10 @@ console.log(privateKeya);
       <div className="brand">
       <img src={Logo} alt="Sanjivani.png"/>
         <h1>SCOE Certificate Verification</h1>
-      </div>
+
+        <p>Account Address: {address}</p>
+        <p>Account Balance: {balance} Matic</p>   
+         </div>
       <label>Certificate ID</label>
       <input type="text" id = "CertificateId"
         placeholder="Certificate ID" name="Certificate ID" required/>
@@ -132,9 +174,15 @@ height: auto;
       height: 5rem;
     }
     h1 {
+
       color: white;
       text-transform: uppercase;
     }
+    p {
+      color: white;
+      text-transform: uppercase;
+    }
+
 
 
   }
@@ -151,7 +199,7 @@ height: auto;
       color: white;
       text-transform: uppercase;
     }
-    p {
+    p{
       color: white;
       text-transform: capitalize;
       border: 0.1rem solid #4e0eff;

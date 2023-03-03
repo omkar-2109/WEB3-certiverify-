@@ -25,6 +25,8 @@ export default function Login() {
             method: "eth_requestAccounts",
           });
           setWalletAddress(accounts[0]);
+          localStorage.setItem("walletAddress", accounts[0]); // store the address in local storage
+
           console.log(accounts[0]);
          
          

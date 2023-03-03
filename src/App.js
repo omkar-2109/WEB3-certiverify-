@@ -5,6 +5,7 @@ import Dashboard from './pages/dashboard';
 //import Verify from './pages/verify';
 import Register from './pages/register';
 import Down from './pages/down';
+import Marksheet from './pages/marksheet';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     <Route path='dashboard' element={<Dashboard/>}/>
     <Route path='register' element={<Register/>}/>
     <Route path='down' element={<Down/>}/>
+    <Route path='marksheet' element={<Marksheet/>}/>
   </Routes>
   </Router>
     
