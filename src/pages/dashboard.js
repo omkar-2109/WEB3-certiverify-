@@ -25,7 +25,7 @@ export default function Login() {
       <button type="submit" onClick={() => {navigate('/register')}} >Certificate</button>
       <br/>
       <br/>
-      <button type="submit" onClick={() => {navigate('/down')}}>Marksheet</button>
+      <button type="submit" onClick={() => {navigate('/marksheet')}}>Marksheet</button>
       </center>
     </form>
     </FormContainer> 
