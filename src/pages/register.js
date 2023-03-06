@@ -8,7 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import Certification from './Certification.json'
 import {connectWallet} from './login';
 
-export default function Dashboard() {
+ function Dashboard() {
+  let navigate = useNavigate();
 
   const [walletAddress, setWalletAddress] = useState("");
   const [certificateId, setCertificateId] = useState('');
@@ -88,12 +89,14 @@ export default function Dashboard() {
       console.log('Error generating certificate:', error);
     }
   };
-  
-  const getData = async () => {
-    try {
-      let CertificateId1 = document.querySelector("#CertificateId1").value;
 
-      const data = await contract.getData(CertificateId1);
+
+const getData = async () => {
+  
+    try {
+      
+  let CertificateId1 = document.querySelector("#CertificateId1").value;
+       const data = await contract.getData(CertificateId1);
       setCertificateData({
         
         candidateName: data[0],
@@ -101,11 +104,11 @@ export default function Dashboard() {
         courseName: data[2],
         expirationYear: data[3].toString(),
       });
+      console.log(data);
     } catch (error) {
       console.log('Error getting certificate data:', error);
     }
   };
-
 
 
 
@@ -118,8 +121,8 @@ export default function Dashboard() {
       <img src={Logo} alt="Sanjivani.png"/>
         <h1>SCOE Certificate Verification</h1>
 
-        <p>Account Address: {address}</p>
-        <p>Account Balance: {balance} Matic</p>   
+        <p ><span>Account Address:</span> <p className='under'>{address}</p></p>
+        <p><span>Account Balance:</span> <p className='under'> {balance}</p> <span>Matic</span></p>   
          </div>
       <label>Certificate ID</label>
       <input type="text" id = "CertificateId"
@@ -137,8 +140,10 @@ export default function Dashboard() {
       <input type="text" id='ExpeiryYear'
         placeholder="Expiration Year"  name="Expiration Year" required/>
     </form>
-    <button className="button1" type="submit" onClick={generateCertificate}>Generate Certificate</button>
+    <button className="button1" type="submit" onClick={generateCertificate}> register</button>
       </div>
+      <button className='button2' onClick={() => {navigate('/down')}}> GenerateCertificate</button>
+      
       
       <div className='data1'>
         <button className="button" onClick={getData}>Get Certificate Data</button>
@@ -150,7 +155,6 @@ export default function Dashboard() {
           <p>Course Name: <span className='data'>{certificateData.courseName}</span></p>
           <p>Expiration Year: <span className='data'>{certificateData.expirationYear}</span></p>
       </div>
-      
     </FormContainer> 
 
   );
@@ -178,7 +182,12 @@ height: auto;
       color: white;
       text-transform: uppercase;
     }
+    .under{
+      color:grey;
+      text-decoration: underline;
+    }
     p {
+   
       color: white;
       text-transform: uppercase;
     }
@@ -187,6 +196,7 @@ height: auto;
 
   }
   .data1{  
+    margin-top:50px;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -273,11 +283,17 @@ height: auto;
     font-size: 1rem;
     text-transform: uppercase;
     &:hover {
-      background-color: #4e0eff;
+      background-color: #926BFF;
     }
-  }
-  .data {
     
+  }.button2{
+     margin-top:50px;
+      align-items: center;
+
+    }
+  .data {
+    text-decoration: underline;
+
     font-weight:bold;
     
     text-transform: uppercase;
@@ -287,5 +303,11 @@ height: auto;
       font-weight: bold;
     }
   }
+  span{
+    font-weight:bold;
+
+  }
 
 `;
+export default Dashboard;
+export async function getData(){};

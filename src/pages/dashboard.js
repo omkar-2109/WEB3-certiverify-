@@ -79,7 +79,7 @@ height: 100vh;
     font-size: 1rem;
     text-transform: uppercase;
     &:hover {
-      background-color: #4e0eff;
+      background-color: #926BFF;
     }
   }
   span {

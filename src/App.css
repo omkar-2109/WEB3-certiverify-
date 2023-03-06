@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+@font-face {
+  font-family: 'Halimun';
+  src: url('./fonts/Halimun.ttf') format('truetype');
+  /* add other font file formats here if needed */
+}
