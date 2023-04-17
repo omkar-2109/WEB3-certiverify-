@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 //import Logo from './logo.jpg';
-import Logo from "./Sanjivani.png";
+import Logo from "./logo.png";
 import { ethers } from "ethers";
 import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -10,19 +10,34 @@ import {connectWallet} from './login';
 
  function Dashboard() {
   let navigate = useNavigate();
+  const [gotError, setGotError] = useState('');
+  const [gotError1, setGotError1] = useState('');
 
+  const [ownerRight, setOwnerRight] = useState('');
+const owner = '0x15279489697176dA1E5f0B0d15f376f1b22fD9aC'
   const [walletAddress, setWalletAddress] = useState("");
   const [certificateId, setCertificateId] = useState('');
   const [certificateData, setCertificateData] = useState({});
-  const contractAddress = '0xAB53AaE6B007DBE08dA62C0C1F5935EA40816a8a';
-  const privateKey = process.env.REACT_APP_PRIVATE_KEY;
+  const contractAddress = '0xa46ea385B908b6D232Ebf94cc0Fef9ceBdC771a6';
+  //const privateKey = process.env.REACT_APP_PRIVATE_KEY;
   const providerUrl = process.env.REACT_APP_PROVIDER_URL;
-  
-  const provider = new ethers.providers.JsonRpcProvider(providerUrl);
-  const signer = provider.getSigner();
-  const wallet = new ethers.Wallet(privateKey, provider);
 
-  const contract = new ethers.Contract(contractAddress, Certification.abi, wallet);
+      const accounts =  window.ethereum.request({ method: 'eth_requestAccounts' });
+
+      // Create Web3Provider instance
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+  
+      // Create Signer instance
+      const signer = provider.getSigner(accounts[0]);
+  
+      // Create contract instance
+      const contract = new ethers.Contract(contractAddress, Certification.abi, signer);
+  
+  //const provider = new ethers.providers.JsonRpcProvider(providerUrl);
+  //const signer = provider.getSigner();
+  //const wallet = new ethers.Wallet(privateKey, provider);
+
+  //const contract = new ethers.Contract(contractAddress, Certification.abi, wallet);
  
 
   const [address, setAddress] = useState('');
@@ -67,26 +82,34 @@ import {connectWallet} from './login';
   // accountData();
   const generateCertificate = async () => {
     try {
-   
+   if(address == owner){
     
   let CertificateId = document.querySelector("#CertificateId").value;
   let NameOfStudent = document.querySelector("#NameOfStudent").value;
   let NameOfOrg = document.querySelector("#NameOfOrg").value;
   let NameOfCourse = document.querySelector("#NameOfCourse").value;
-  let ExpeiryYear = document.querySelector("#ExpeiryYear").value;
+  let BatchYear = document.querySelector("#BatchYear").value;
 
       const tx = await contract.generateCertificate(
         CertificateId,
         NameOfStudent,
         NameOfOrg,
         NameOfCourse,
-        ExpeiryYear
+        BatchYear
       );
       await tx.wait();
+      setGotError('');
+      setOwnerRight('');
       console.log('Certificate generated!');
       alert("Certificate generated!");
+   }else{
+    console.log("You are not the Admin");
+    setOwnerRight(`You don't have Admin Rights`);
+   }
     } catch (error) {
       console.log('Error generating certificate:', error);
+      setGotError(`"Error" Please check the Book ID and for more info check console`);
+
     }
   };
 
@@ -102,11 +125,14 @@ const getData = async () => {
         candidateName: data[0],
         orgName: data[1],
         courseName: data[2],
-        expirationYear: data[3].toString(),
+        batchYear: data[3].toString(),
       });
-      console.log(data);
+      //console.log(data);
+setGotError1('');
     } catch (error) {
       console.log('Error getting certificate data:', error);
+      setGotError1(`"Error" Please enter valid ID and for more info check console`);
+
     }
   };
 
@@ -119,9 +145,9 @@ const getData = async () => {
     <form action=''>
       <div className="brand">
       <img src={Logo} alt="Sanjivani.png"/>
-        <h1>SCOE Certificate Verification</h1>
+        <h1>Vericrypt</h1>
 
-        <p ><span>Account Address:</span> <p className='under'>{address}</p></p>
+        <p><span>Account Address:</span> <p className='under'>{address}</p></p>
         <p><span>Account Balance:</span> <p className='under'> {balance}</p> <span>Matic</span></p>   
          </div>
       <label>Certificate ID</label>
@@ -130,30 +156,36 @@ const getData = async () => {
       <label>Name of Student</label>
       <input type="text" id='NameOfStudent' placeholder="Name of Student"
         name="Name of Student" required/>
-      <label>Name of Organiztion</label>
+      <label>Name of Organization</label>
       <input type="text" id='NameOfOrg'
         placeholder="Name of Organization"  name="COrganization Name" required/>
     <label>Name of Course</label>
       <input type="text" id='NameOfCourse'
         placeholder="Name of Course" name="Course Name" required/>
-      <label>Expiration Year</label>
-      <input type="text" id='ExpeiryYear'
-        placeholder="Expiration Year"  name="Expiration Year" required/>
+      <label>Batch Year</label>
+      <input type="text" id='BatchYear'
+        placeholder="Batch Year"  name="Batch Year" required/>
+       
     </form>
+     <p>{gotError}</p>
+     <p>{ownerRight}</p>
+
     <button className="button1" type="submit" onClick={generateCertificate}> register</button>
-      </div>
-      <button className='button2' onClick={() => {navigate('/down')}}> GenerateCertificate</button>
+        </div>
       
-      
+      <button className='button2' onClick={() => {navigate('/down')}}> Generate Certificate</button>
+    
       <div className='data1'>
-        <button className="button" onClick={getData}>Get Certificate Data</button>
+        <button className="button" onClick={getData}>Verify Certificate Data</button>
         <label>Certificate ID</label>
       <input type="text" id = "CertificateId1" placeholder="Certificate ID" name="Certificate ID" required/>
-          <h2>Certificate Data:</h2>
+      <h4>{gotError1}</h4>
+
+          <h2>Certificate Credential:</h2>
           <p>Candidate Name: <span className='data'>{certificateData.candidateName}</span></p>
           <p>Organization Name: <span className='data'>{certificateData.orgName}</span></p>
           <p>Course Name: <span className='data'>{certificateData.courseName}</span></p>
-          <p>Expiration Year: <span className='data'>{certificateData.expirationYear}</span></p>
+          <p>Batch Year: <span className='data'>{certificateData.batchYear}</span></p>
       </div>
     </FormContainer> 
 
@@ -207,11 +239,10 @@ height: auto;
 
     h2 {
       color: white;
-      text-transform: uppercase;
+      text-transform: capitalize;
     }
     p{
       color: white;
-      text-transform: capitalize;
       border: 0.1rem solid #4e0eff;
       border-radius: 0.4rem;
       padding: 1rem;
@@ -236,6 +267,14 @@ height: auto;
 
   .forms {
     position: relative;
+    align-items: center;
+    p{
+      color: white;
+      
+      text-transform: capitalize;
+      align-items: center;
+  
+     }
   }
 
   .button1{
@@ -256,7 +295,6 @@ height: auto;
   }
   h4{
     color: white;
-      text-transform: uppercase;
   }
 
   input {
@@ -281,7 +319,7 @@ height: auto;
     cursor: pointer;
     border-radius: 0.4rem;
     font-size: 1rem;
-    text-transform: uppercase;
+    text-transform: capitalize;
     &:hover {
       background-color: #926BFF;
     }
@@ -307,6 +345,7 @@ height: auto;
     font-weight:bold;
 
   }
+
 
 `;
 export default Dashboard;

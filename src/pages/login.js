@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
-import Logo from "./Sanjivani.png";
+import Logo from "./logo.png";
 //import {useNavigate} from 'react-router-dom';
 import { useEffect, useState } from "react";
 
@@ -89,8 +89,10 @@ export default function Login() {
     <form action=''>
       <div className="brand">
       <img src={Logo} alt="Sanjivani.png"/>
-        <h1>SCOE Certificate Verification</h1>
+      <h1>Vericrypt</h1>
+       
       </div>
+      <h1>Certificate Verification System</h1>
       <button type="button" onClick= {connectWallet}>Login</button>
     </form>
     </FormContainer> 
@@ -141,6 +143,10 @@ height: 100vh;
     &:hover {
       background-color: #4e0eff;
     }
+  }
+  h1 {
+    color: white;
+    text-transform: capitalize;
   }
   span {
     color: white;

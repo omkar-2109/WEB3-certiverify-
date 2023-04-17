@@ -1,6 +1,6 @@
 import {React} from 'react';
 import styled from "styled-components";
-import Logo from "./Sanjivani.png";
+import Logo from "./logo.png";
 import { ethers } from "ethers";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +18,7 @@ export default function Login() {
     <form action=''>
       <div className="brand">
       <img src={Logo} alt="Sanjivani.png"/>
-        <h1>Welcome to SCOE Certificate Verification</h1>
+        <h1>Vericrypt</h1>
       </div>
       <center>
         <h2>What you want to Generate?</h2>

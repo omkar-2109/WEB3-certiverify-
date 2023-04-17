@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import Logo from './logo.png'
 
 
 export default function Marksheet() {
@@ -15,7 +16,9 @@ export default function Marksheet() {
   
   return (
 <FormContainer>
+<img src={Logo} alt="Sanjivani.png"/>
 
+<h1>Vericrypt</h1>
  <div className='head'>Coming soon...✌️ </div>
  
  </FormContainer>
@@ -36,6 +39,14 @@ height: 100vh;
     font-size: calc(30px + 2vmin);
 
     text-transform: uppercase;
+  }
+  img {
+    height: 10rem;
+  }
+  h1 {
+    color: white;
+    text-transform: uppercase;
+    font-size: calc(20px + 2vmin);
   }
 
   `;

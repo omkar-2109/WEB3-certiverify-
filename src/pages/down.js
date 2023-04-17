@@ -5,14 +5,14 @@ import Certification from './Certification.json'
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import Cert from './Certificate.png';
+import Cert from './certificate.png';
 import{getData} from "./register";
 
 const CertificateGenerator = () => {
 
 
   const [certificateData, setCertificateData] = useState({});
-  const contractAddress = '0xAB53AaE6B007DBE08dA62C0C1F5935EA40816a8a';
+  const contractAddress = '0xa46ea385B908b6D232Ebf94cc0Fef9ceBdC771a6';
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
   const providerUrl = process.env.REACT_APP_PROVIDER_URL;
   
@@ -75,7 +75,7 @@ const CertificateGenerator = () => {
         <label >Certificate ID:</label>
         <input type="text" id = "CertificateId1" value={certificateId} onChange={(e) => setCertificateId(e.target.value)}  placeholder="Certificate ID" name="Certificate ID" required/>
         <button  onClick={getData}>Get Certificate Data</button>
-        <button onClick={generateCertificate}>Generate Certificate</button>
+        <button onClick={generateCertificate}>Download</button>
 
 
         <div className="certificate" ref={certificateRef}> 
@@ -167,9 +167,6 @@ position: relative;
     height: 885px; 
     transform: translate(-50%, 50%);
      }
-    
-
-  
     }
   }
 label{
@@ -205,36 +202,4 @@ input {
       }
 `;
 
-    {/* <div className='data1'>
-    <button className="button" onClick={getData}>Get Certificate Data</button>
-    <label>Certificate ID</label>
-  <input type="text" id = "CertificateId1" placeholder="Certificate ID" name="Certificate ID" required/>
-      <h2>Certificate Data:</h2>
-      <p>Candidate Name: <span className='data'>{certificateData.candidateName}</span></p>
-      <p>Organization Name: <span className='data'>{certificateData.orgName}</span></p>
-      <p>Course Name: <span className='data'>{certificateData.courseName}</span></p>
-      <p>Expiration Year: <span className='data'>{certificateData.expirationYear}</span></p>
-  </div> */}
-      {/* <form>
-        <label>
-          Certificate ID:
-          <input type="text" value={certificateId} onChange={(e) => setCertificateId(e.target.value)} />
-        </label>
-        <label>
-          Student Name:
-          <input type="text" value={studentName} onChange={(e) => setStudentName(e.target.value)} />
-        </label>
-        <label>
-          Origination Name:
-          <input type="text" value={orgName} onChange={(e) => setOrgName(e.target.value)} />
-        </label>
-        <label>
-          Course Name:
-          <input type="text" value={courseName} onChange={(e) => setCourseName(e.target.value)} />
-        </label>
-        <label>
-          Expiry Year:
-          <input type="text" value={expiryYear} onChange={(e) => setExpiryYear(e.target.value)} />
-        </label>
-      </form> */}
-
+ 

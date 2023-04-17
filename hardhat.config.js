@@ -5,7 +5,7 @@ require("@nomiclabs/hardhat-etherscan");
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
   const providerUrl = process.env.REACT_APP_PROVIDER_URL;
 
-  const PUBLIC_KEY = "0x58aA76C20fFcA2e38Cb7ed6fCfa5cdEeb20b7E63";
+  const PUBLIC_KEY = "0x15279489697176dA1E5f0B0d15f376f1b22fD9aC";
 
 
 module.exports = {
