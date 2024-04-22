@@ -16,11 +16,11 @@ import image1 from './image1.jpeg';
   const [gotError1, setGotError1] = useState('');
 
   const [ownerRight, setOwnerRight] = useState('');
-const owner = '0x15279489697176dA1E5f0B0d15f376f1b22fD9aC'
+const owner = '0xD7E3fa332A5C590EF889c51Fcf48b31b5d408937'
   const [walletAddress, setWalletAddress] = useState("");
   const [certificateId, setCertificateId] = useState('');
   const [certificateData, setCertificateData] = useState({});
-  const contractAddress = '0xa46ea385B908b6D232Ebf94cc0Fef9ceBdC771a6';
+  const contractAddress = '0xF8Ed294EF891ACcB8B33138F42faD57117b61d03';
   //const privateKey = process.env.REACT_APP_PRIVATE_KEY;
   const providerUrl = process.env.REACT_APP_PROVIDER_URL;
 

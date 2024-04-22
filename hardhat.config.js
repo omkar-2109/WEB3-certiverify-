@@ -6,16 +6,16 @@ require("@nomiclabs/hardhat-etherscan");
   const providerUrl = process.env.REACT_APP_PROVIDER_URL;
   const polygon_api_key = process.env.REACT_APP_POLYGONSCAN_API_KEY;
 
-  const PUBLIC_KEY = "0x15279489697176dA1E5f0B0d15f376f1b22fD9aC";
+  const PUBLIC_KEY = "0xD7E3fa332A5C590EF889c51Fcf48b31b5d408937";
 
 
 module.exports = {
   solidity: "0.8.9",
-  defaultNetwork: "polygon_mumbai",
+  defaultNetwork: "polygon_amoy",
   networks: {
     hardhat: {
     },
-    polygon_mumbai: {
+    polygon_amoy: {
       url: providerUrl,
       accounts: [`0x${privateKey}`]
     }

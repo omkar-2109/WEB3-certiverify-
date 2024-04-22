@@ -12,7 +12,7 @@ const CertificateGenerator = () => {
 
 
   const [certificateData, setCertificateData] = useState({});
-  const contractAddress = '0xa46ea385B908b6D232Ebf94cc0Fef9ceBdC771a6';
+  const contractAddress = '0xF8Ed294EF891ACcB8B33138F42faD57117b61d03';
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
   const providerUrl = process.env.REACT_APP_PROVIDER_URL;
   
